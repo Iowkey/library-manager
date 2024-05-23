@@ -1,0 +1,22 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="LibraryManager.WebForms.SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title><%: Page.Title %> - LibraryManager</title>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/jquery") %>
+        <%: Scripts.Render("~/bundles/bootstrap") %>
+        <%: Styles.Render("~/Content/css") %>
+    </asp:PlaceHolder>
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server" />
+        <div class="container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+    </form>
+</body>
+</html>
