@@ -39,11 +39,19 @@ namespace LibraryManager.WebForms.Views
             {
                 SuccessLabel.Text = "Book deleted successfully!";
                 ConfirmDeleteButton.Enabled = false;
+                Response.Redirect("Home.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
             }
             else
             {
                 MessageLabel.Text = "Error deleting book.";
             }
+        }
+
+        protected async void CancelDeleteButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }

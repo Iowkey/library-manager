@@ -15,16 +15,16 @@ namespace LibraryManager.WebForms
 
         public ApiClient()
         {
-            _client = new HttpClient { BaseAddress = new Uri("http://localhost:5000/api/") };
+            _client = new HttpClient { BaseAddress = new Uri("https://localhost:44301/api/") };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<List<BookDto>> GetBooksAsync()
+        public async Task<IEnumerable<BookDto>> GetBooksAsync()
         {
-            var response = await _client.GetAsync("books");
+            var response = await _client.GetAsync($"books/");
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<BookDto>>(json);
+            return  JsonConvert.DeserializeObject<List<BookDto>>(json);
         }
 
         public async Task<BookDto> GetBookAsync(int id)
@@ -44,13 +44,12 @@ namespace LibraryManager.WebForms
             return JsonConvert.DeserializeObject<BookDto>(json);
         }
 
-        public async Task<BookDto> UpdateBookAsync(BookDto book)
+        public async Task<string> UpdateBookAsync(BookDto book)
         {
             var content = new StringContent(JsonConvert.SerializeObject(book), Encoding.UTF8, "application/json");
             var response = await _client.PutAsync($"books/{book.BookId}", content);
             response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<BookDto>(json);
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<bool> DeleteBookAsync(int id)

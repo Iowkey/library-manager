@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -8,7 +9,7 @@ namespace LibraryManager.WebForms.Views
     {
         private readonly ApiClient _apiClient = new ApiClient();
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
@@ -26,8 +27,10 @@ namespace LibraryManager.WebForms.Views
         protected async void BooksGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int bookId = Convert.ToInt32(BooksGridView.DataKeys[e.RowIndex].Values[0]);
-            await _apiClient.DeleteBookAsync(bookId);
-            BindBooksGrid();
+            Response.Redirect($"~/Views/DeleteBook.aspx?id={bookId}", false);
+            Context.ApplicationInstance.CompleteRequest();
+            //Response.Redirect($"~/Views/DeleteBook.aspx?id={bookId}");
+            //BindBooksGrid();
         }
 
         protected void BooksGridView_RowEditing(object sender, GridViewEditEventArgs e)

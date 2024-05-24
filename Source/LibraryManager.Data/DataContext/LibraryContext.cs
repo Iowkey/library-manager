@@ -2,6 +2,8 @@
 using System;
 using System.Configuration;
 using System.Data.Entity;
+using System.IO;
+using System.Reflection;
 
 namespace LibraryManager.Data.DataContext
 {
@@ -27,9 +29,26 @@ namespace LibraryManager.Data.DataContext
             base.OnModelCreating(modelBuilder);
         }
 
+        public void Seed()
+        {
+            // Load the SQL script from the embedded resource
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "LibraryManager.Data.StoredProcedures.CreateStoredProcedures.sql";
+
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    var sql = reader.ReadToEnd();
+                    this.Database.ExecuteSqlCommand(sql);
+                }
+            }
+        }
+
         private static string GetConnectionString()
         {
-            var connectionString = ConfigurationManager.ConnectionStrings[ConnectionStringName].ConnectionString;
+            var a = ConfigurationManager.ConnectionStrings;
+            var connectionString = "Data Source=DESKTOP-2FMTBJB;Initial Catalog=LibraryDB;Integrated Security=True;TrustServerCertificate=True"; //ConfigurationManager.ConnectionStrings["LibraryContextConnectionString"].ConnectionString;
             if (string.IsNullOrEmpty(connectionString))
             {
                 throw new InvalidOperationException($"Failed to retrieve the connection string from the environment variable {ConnectionStringName}. Ensure that the environment variable is set with the correct connection string.");

@@ -59,9 +59,9 @@ namespace LibraryManager.WebForms.Views
                 CategoryId = int.Parse(CategoryDropDownList.SelectedValue)
             };
 
-            var updatedBook = await _apiClient.UpdateBookAsync(book);
+            var updateBookResult = await _apiClient.UpdateBookAsync(book);
 
-            if (updatedBook != null)
+            if (updateBookResult != null)
             {
                 SuccessLabel.Text = "Book updated successfully!";
             }
@@ -69,6 +69,11 @@ namespace LibraryManager.WebForms.Views
             {
                 MessageLabel.Text = "Error updating book.";
             }
+        }
+
+        protected void BackToHomeButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
         }
     }
 }

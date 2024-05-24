@@ -6,7 +6,7 @@ namespace LibraryManager.Api.Services
 {
     public interface IBookService
     {
-        Task<IEnumerable<BookDto>> GetAllBooksAsync();
+        Task<IEnumerable<BookDto>> GetBooksAsync();
         Task<BookDto> GetBookByIdAsync(int bookId);
         Task<BookDto> CreateBookAsync(BookDto bookDto);
         Task<bool> UpdateBookAsync(int bookId, BookDto bookDto);

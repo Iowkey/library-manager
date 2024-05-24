@@ -18,9 +18,9 @@ namespace LibraryManager.Api.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<BookDto>> GetAllBooksAsync()
+        public async Task<IEnumerable<BookDto>> GetBooksAsync()
         {
-            var books = await _bookRepository.GetAllBooksAsync();
+            var books = await _bookRepository.GetBooksAsync();
             return _mapper.Map<IEnumerable<BookDto>>(books);
         }
 

@@ -54,5 +54,10 @@ namespace LibraryManager.WebForms.Views
                 MessageLabel.Text = "Error adding book.";
             }
         }
+
+        protected void BackToHomeButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
+        }
     }
 }

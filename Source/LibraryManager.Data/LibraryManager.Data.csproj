@@ -6,6 +6,9 @@
   <PropertyGroup>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StoredProcedures\CreateStoredProcedures.sql" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
@@ -13,6 +16,10 @@
 
   <ItemGroup>
     <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="StoredProcedures\" />
   </ItemGroup>
 
 </Project>

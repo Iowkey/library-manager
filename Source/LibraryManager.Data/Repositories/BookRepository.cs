@@ -1,7 +1,9 @@
 ﻿using LibraryManager.Data.DataContext;
 using LibraryManager.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace LibraryManager.Data.Repositories
@@ -15,9 +17,18 @@ namespace LibraryManager.Data.Repositories
             _context = context;
         }
 
-        public async Task<List<Book>> GetAllBooksAsync()
+        public async Task<IEnumerable<Book>> GetBooksAsync()
         {
-            return await _context.Books.ToListAsync();
+            var books = await _context.Database.SqlQuery<Book>(
+                "EXEC GetBooks @PageNumber, @PageSize, @SearchTerm, @SortColumn, @SortOrder",
+                new SqlParameter("@PageNumber", 1),
+                new SqlParameter("@PageSize", int.MaxValue),
+                new SqlParameter("@SearchTerm", DBNull.Value),
+                new SqlParameter("@SortColumn", "BookId"),
+                new SqlParameter("@SortOrder", "ASC")
+            ).ToListAsync();
+
+            return books;
         }
 
         public async Task<Book> GetBookByIdAsync(int id)

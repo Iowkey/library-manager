@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Edit Book" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditBook.aspx.cs" Inherits="LibraryManager.WebForms.Views.EditBook" %>
+﻿<%@ Page Async="True" Title="Edit Book" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditBook.aspx.cs" Inherits="LibraryManager.WebForms.Views.EditBook" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Edit Book</h2>
@@ -35,4 +35,5 @@
             <td colspan="2"><asp:Button ID="UpdateBookButton" runat="server" Text="Update Book" OnClick="UpdateBookButton_Click" /></td>
         </tr>
     </table>
+    <asp:Button ID="BackToHomeButton" runat="server" Text="Back to Home" OnClick="BackToHomeButton_Click" />
 </asp:Content>

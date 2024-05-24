@@ -4,12 +4,12 @@
     <h2>Book List</h2>
     <asp:GridView ID="BooksGridView" runat="server" AutoGenerateColumns="False" DataKeyNames="BookId" OnRowEditing="BooksGridView_RowEditing" OnRowDeleting="BooksGridView_RowDeleting">
         <Columns>
-            <asp:BoundField DataField="BookId" HeaderText="ID" ReadOnly="True" />
             <asp:BoundField DataField="Title" HeaderText="Title" />
             <asp:BoundField DataField="Author" HeaderText="Author" />
             <asp:BoundField DataField="ISBN" HeaderText="ISBN" />
             <asp:BoundField DataField="PublicationYear" HeaderText="Year" />
             <asp:BoundField DataField="Quantity" HeaderText="Quantity" />
+            <asp:BoundField DataField="CategoryId" HeaderText="Category ID" />
             <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
         </Columns>
     </asp:GridView>
