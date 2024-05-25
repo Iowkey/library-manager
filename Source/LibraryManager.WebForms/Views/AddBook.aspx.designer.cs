@@ -78,13 +78,22 @@ namespace LibraryManager.WebForms.Views
         protected global::System.Web.UI.WebControls.TextBox QuantityTextBox;
 
         /// <summary>
-        /// CategoryDropDownList control.
+        /// CategoryTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CategoryDropDownList;
+        protected global::System.Web.UI.WebControls.TextBox CategoryTextBox;
+
+        /// <summary>
+        /// CategoryListBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox CategoryListBox;
 
         /// <summary>
         /// AddBookButton control.

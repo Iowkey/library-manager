@@ -28,25 +28,33 @@ namespace LibraryManager.Api.Controllers
         public async Task<IHttpActionResult> GetCategory(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
-            if (category == null) return NotFound();
+            if (category == null)
+            {
+                return NotFound();
+            }
+
             return Ok(category);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IHttpActionResult> PostCategory(CategoryDto categoryDto)
+        public async Task<IHttpActionResult> CreateCategory(CategoryDto categoryDto)
         {
             var createdCategory = await _categoryService.CreateCategoryAsync(categoryDto);
-            return CreatedAtRoute("GetCategory", new { id = createdCategory.CategoryId }, createdCategory);
+            return Created($"categories/{createdCategory.CategoryId}", createdCategory);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IHttpActionResult> PutCategory(int id, CategoryDto categoryDto)
+        public async Task<IHttpActionResult> UpdateCategory(int id, CategoryDto categoryDto)
         {
             if (id != categoryDto.CategoryId) return BadRequest();
             var result = await _categoryService.UpdateCategoryAsync(id, categoryDto);
-            if (!result) return NotFound();
+            if (!result)
+            {
+                return NotFound();
+            }
+
             return StatusCode(System.Net.HttpStatusCode.NoContent);
         }
 

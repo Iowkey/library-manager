@@ -28,7 +28,8 @@
         <tr>
             <td>Category:</td>
             <td>
-                <asp:DropDownList ID="CategoryDropDownList" runat="server"></asp:DropDownList>
+                <asp:TextBox ID="CategoryTextBox" runat="server" AutoPostBack="false" onkeyup="filterCategories()" />
+                <asp:ListBox ID="CategoryListBox" runat="server" AutoPostBack="false" Height="100px" SelectionMode="Single" OnSelectedIndexChanged="CategoryListBox_SelectedIndexChanged"></asp:ListBox>
             </td>
         </tr>
         <tr>
@@ -38,4 +39,16 @@
             <td colspan="2"><asp:Button ID="BackToHomeButton" runat="server" Text="Back to Home" OnClick="BackToHomeButton_Click" /></td>
         </tr>
     </table>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="HeadContent" runat="server">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        function filterCategories() {
+            var input = $("#<%= CategoryTextBox.ClientID %>").val().toLowerCase();
+            $("#<%= CategoryListBox.ClientID %> option").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(input) > -1)
+            });
+        }
+    </script>
 </asp:Content>

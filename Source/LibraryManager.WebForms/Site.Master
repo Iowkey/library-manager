@@ -10,6 +10,8 @@
         <%: Scripts.Render("~/bundles/bootstrap") %>
         <%: Styles.Render("~/Content/css") %>
     </asp:PlaceHolder>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <form runat="server">

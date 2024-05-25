@@ -1,5 +1,7 @@
 ﻿using LibraryManager.Api.DTOs;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.UI;
 
 namespace LibraryManager.WebForms.Views
@@ -8,33 +10,45 @@ namespace LibraryManager.WebForms.Views
     {
         private readonly ApiClient _apiClient = new ApiClient();
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                BindCategories();
+                await LoadCategoriesAsync();
             }
         }
 
-        private async void BindCategories()
+        private async Task LoadCategoriesAsync()
         {
             var categories = await _apiClient.GetCategoriesAsync();
-            CategoryDropDownList.DataSource = categories;
-            CategoryDropDownList.DataTextField = "Name";
-            CategoryDropDownList.DataValueField = "CategoryId";
-            CategoryDropDownList.DataBind();
+            CategoryListBox.DataSource = categories;
+            CategoryListBox.DataTextField = "Name";
+            CategoryListBox.DataValueField = "CategoryId";
+            CategoryListBox.DataBind();
         }
 
         protected async void AddBookButton_Click(object sender, EventArgs e)
         {
+            var categoryText = CategoryTextBox.Text.Trim();
+            var categories = await _apiClient.GetCategoriesAsync();
+            var existingCategory = categories.FirstOrDefault(c => c.Name.Equals(categoryText, StringComparison.OrdinalIgnoreCase));
+
+            if (existingCategory == null)
+            {
+                categoryText = char.ToUpper(categoryText[0]) + categoryText.Substring(1).ToLower();
+                var newCategory = new CategoryDto { Name = categoryText };
+                var createdCategory = await _apiClient.CreateCategoryAsync(newCategory);
+                existingCategory = createdCategory;
+            }
+
             var book = new BookDto
             {
-                Title = TitleTextBox.Text,
-                Author = AuthorTextBox.Text,
-                ISBN = ISBNTextBox.Text,
-                PublicationYear = int.Parse(PublicationYearTextBox.Text),
-                Quantity = int.Parse(QuantityTextBox.Text),
-                CategoryId = int.Parse(CategoryDropDownList.SelectedValue)
+                Title = TitleTextBox.Text.Trim(),
+                Author = AuthorTextBox.Text.Trim(),
+                ISBN = ISBNTextBox.Text.Trim(),
+                PublicationYear = int.Parse(PublicationYearTextBox.Text.Trim()),
+                Quantity = int.Parse(QuantityTextBox.Text.Trim()),
+                CategoryId = existingCategory.CategoryId
             };
 
             var addedBook = await _apiClient.CreateBookAsync(book);
@@ -47,12 +61,17 @@ namespace LibraryManager.WebForms.Views
                 ISBNTextBox.Text = string.Empty;
                 PublicationYearTextBox.Text = string.Empty;
                 QuantityTextBox.Text = string.Empty;
-                CategoryDropDownList.ClearSelection();
+                CategoryListBox.Text = string.Empty;
             }
             else
             {
                 MessageLabel.Text = "Error adding book.";
             }
+        }
+
+        protected void CategoryListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CategoryTextBox.Text = CategoryListBox.SelectedItem.Text;
         }
 
         protected void BackToHomeButton_Click(object sender, EventArgs e)
