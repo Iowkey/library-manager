@@ -11,8 +11,8 @@ namespace LibraryManager.Data.DataContext
     {
         private const string ConnectionStringName = "LibraryContextConnectionString";
 
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
 
         public LibraryContext() : base(GetConnectionString())
         {

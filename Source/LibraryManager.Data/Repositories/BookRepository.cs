@@ -1,9 +1,9 @@
 ﻿using LibraryManager.Data.DataContext;
 using LibraryManager.Data.Entities;
+using LibraryManager.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace LibraryManager.Data.Repositories
@@ -11,24 +11,17 @@ namespace LibraryManager.Data.Repositories
     public class BookRepository : IBookRepository
     {
         private readonly LibraryContext _context;
+        private readonly IDatabaseOperations _databaseOperations;
 
-        public BookRepository(LibraryContext context)
+        public BookRepository(LibraryContext context, IDatabaseOperations databaseOperations)
         {
             _context = context;
+            _databaseOperations = databaseOperations;
         }
 
         public async Task<IEnumerable<Book>> GetBooksAsync()
         {
-            var books = await _context.Database.SqlQuery<Book>(
-                "EXEC GetBooks @PageNumber, @PageSize, @SearchTerm, @SortColumn, @SortOrder",
-                new SqlParameter("@PageNumber", 1),
-                new SqlParameter("@PageSize", int.MaxValue),
-                new SqlParameter("@SearchTerm", DBNull.Value),
-                new SqlParameter("@SortColumn", "BookId"),
-                new SqlParameter("@SortOrder", "ASC")
-            ).ToListAsync();
-
-            return books;
+            return await _databaseOperations.GetBooksAsync(1, int.MaxValue, null, "BookId", "ASC");
         }
 
         public async Task<Book> GetBookByIdAsync(int id)
@@ -38,12 +31,22 @@ namespace LibraryManager.Data.Repositories
 
         public async Task AddBookAsync(Book book)
         {
+            if (!IsValidBook(book))
+            {
+                throw new ArgumentException("Invalid book entity. Quantity can't be negative, and Publication year must be greater than 1000.");
+            }
+
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateBookAsync(Book book)
         {
+            if (!IsValidBook(book))
+            {
+                throw new ArgumentException("Invalid book entity. Quantity can't be negative, and Publication year must be greater than 1000.");
+            }
+
             _context.Entry(book).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -57,5 +60,10 @@ namespace LibraryManager.Data.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        private bool IsValidBook(Book book)
+        {
+            return book.Quantity >= 0 && book.PublicationYear > 1000;
+        }
+
     }
 }

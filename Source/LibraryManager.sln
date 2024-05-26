@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManager.Api", "Libra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManager.WebForms", "LibraryManager.WebForms\LibraryManager.WebForms.csproj", "{7028A5FA-7693-4639-8A45-092A8F2445DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManager.UnitTests", "LibraryManager.UnitTests\LibraryManager.UnitTests.csproj", "{B072618F-8E7D-4838-9BA4-728A4DCEDCA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7028A5FA-7693-4639-8A45-092A8F2445DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7028A5FA-7693-4639-8A45-092A8F2445DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7028A5FA-7693-4639-8A45-092A8F2445DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B072618F-8E7D-4838-9BA4-728A4DCEDCA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B072618F-8E7D-4838-9BA4-728A4DCEDCA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B072618F-8E7D-4838-9BA4-728A4DCEDCA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B072618F-8E7D-4838-9BA4-728A4DCEDCA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

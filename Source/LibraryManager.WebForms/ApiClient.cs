@@ -19,6 +19,12 @@ namespace LibraryManager.WebForms
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        // Constructor for injecting HttpClient
+        public ApiClient(HttpClient client)
+        {
+            _client = client;
+        }
+
         public async Task<IEnumerable<BookDto>> GetBooksAsync()
         {
             var response = await _client.GetAsync($"books/");

@@ -1,9 +1,7 @@
 ﻿using LibraryManager.Api.DTOs;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace LibraryManager.WebForms.Views
 {

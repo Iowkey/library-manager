@@ -157,7 +157,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DTOs\BookDto.cs" />
     <Compile Include="DTOs\CategoryDto.cs" />
     <Compile Include="Global.asax.cs">
