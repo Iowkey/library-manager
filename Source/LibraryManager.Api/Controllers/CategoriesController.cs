@@ -17,7 +17,7 @@ namespace LibraryManager.Api.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IHttpActionResult> GetCategories()
+        public async Task<IHttpActionResult> GetCategoriesAsync()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
             return Ok(categories);
@@ -25,7 +25,7 @@ namespace LibraryManager.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IHttpActionResult> GetCategory(int id)
+        public async Task<IHttpActionResult> GetCategoryAsync(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
             if (category == null)
@@ -38,7 +38,7 @@ namespace LibraryManager.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IHttpActionResult> CreateCategory(CategoryDto categoryDto)
+        public async Task<IHttpActionResult> CreateCategoryAsync(CategoryDto categoryDto)
         {
             var createdCategory = await _categoryService.CreateCategoryAsync(categoryDto);
             return Created($"categories/{createdCategory.CategoryId}", createdCategory);
@@ -46,7 +46,7 @@ namespace LibraryManager.Api.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IHttpActionResult> UpdateCategory(int id, CategoryDto categoryDto)
+        public async Task<IHttpActionResult> UpdateCategoryAsync(int id, CategoryDto categoryDto)
         {
             if (id != categoryDto.CategoryId) return BadRequest();
             var result = await _categoryService.UpdateCategoryAsync(id, categoryDto);
@@ -60,7 +60,7 @@ namespace LibraryManager.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IHttpActionResult> DeleteCategory(int id)
+        public async Task<IHttpActionResult> DeleteCategoryAsync(int id)
         {
             var result = await _categoryService.DeleteCategoryAsync(id);
             if (!result) return NotFound();

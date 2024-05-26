@@ -78,13 +78,13 @@ namespace LibraryManager.WebForms.Views
         protected global::System.Web.UI.WebControls.TextBox QuantityTextBox;
 
         /// <summary>
-        /// CategoryTextBox control.
+        /// CategoryComboBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CategoryTextBox;
+        protected global::AjaxControlToolkit.ComboBox CategoryComboBox;
 
         /// <summary>
         /// AddBookButton control.

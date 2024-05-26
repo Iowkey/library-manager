@@ -1,5 +1,7 @@
 ﻿<%@ Page Async="True" Title="Add Book" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddBook.aspx.cs" Inherits="LibraryManager.WebForms.Views.AddBook" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Add New Book</h2>
     <asp:Label ID="MessageLabel" runat="server" ForeColor="Red" />
@@ -28,7 +30,8 @@
         <tr>
             <td>Category:</td>
             <td>
-                <asp:TextBox ID="CategoryTextBox" runat="server" />
+                <ajaxToolkit:ComboBox ID="CategoryComboBox" runat="server" AutoCompleteMode="SuggestAppend">
+                </ajaxToolkit:ComboBox>
             </td>
         </tr>
         <tr>
@@ -38,38 +41,4 @@
             <td colspan="2"><asp:Button ID="BackToHomeButton" runat="server" Text="Back to Home" OnClick="BackToHomeButton_Click" /></td>
         </tr>
     </table>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var availableCategories = [];
-
-            function loadCategories() {
-                $.ajax({
-                    type: "GET",
-                    url: '<%= ResolveUrl("~/Api/Categories") %>',
-                    success: function (data) {
-                        availableCategories = data.map(function (category) {
-                            return category.Name;
-                        });
-                        $("#<%= CategoryTextBox.ClientID %>").autocomplete({
-                            source: availableCategories,
-                            change: function (event, ui) {
-                                if (ui.item == null) {
-                                    var value = $(this).val().toLowerCase();
-                                    var found = availableCategories.some(function (category) {
-                                        return category.toLowerCase() === value;
-                                    });
-                                    if (found) {
-                                        $(this).val('');
-                                        alert('This category already exists. Please select it from the list.');
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-
-            loadCategories();
-        });
-    </script>
 </asp:Content>

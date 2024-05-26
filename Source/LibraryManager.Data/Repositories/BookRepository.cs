@@ -60,6 +60,7 @@ namespace LibraryManager.Data.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
         private bool IsValidBook(Book book)
         {
             return book.Quantity >= 0 && book.PublicationYear > 1000;

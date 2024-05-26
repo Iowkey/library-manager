@@ -1,5 +1,8 @@
 ﻿using LibraryManager.Api.DTOs;
 using System;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web.UI;
 
@@ -13,19 +16,24 @@ namespace LibraryManager.WebForms.Views
         {
             if (!IsPostBack)
             {
+                var categories = await _apiClient.GetCategoriesAsync();
+                CategoryComboBox.DataSource = categories;
+                CategoryComboBox.DataTextField = "Name";
+                CategoryComboBox.DataValueField = "Name";
+                CategoryComboBox.DataBind();
             }
         }
 
         protected async void AddBookButton_Click(object sender, EventArgs e)
         {
-            var categoryText = CategoryTextBox.Text.Trim();
+            var categoryText = CategoryComboBox.Text.Trim();
             var categories = await _apiClient.GetCategoriesAsync();
             var existingCategory = categories.FirstOrDefault(c => c.Name.Equals(categoryText, StringComparison.OrdinalIgnoreCase));
 
             if (existingCategory == null)
             {
                 categoryText = char.ToUpper(categoryText[0]) + categoryText.Substring(1).ToLower();
-                var newCategory = new CategoryDto { Name = categoryText };
+                var newCategory = new CategoryDto { Name = categoryText, Description = $"Some description of {categoryText} books."};
                 var createdCategory = await _apiClient.CreateCategoryAsync(newCategory);
                 existingCategory = createdCategory;
             }
@@ -65,7 +73,7 @@ namespace LibraryManager.WebForms.Views
             ISBNTextBox.Text = string.Empty;
             PublicationYearTextBox.Text = string.Empty;
             QuantityTextBox.Text = string.Empty;
-            CategoryTextBox.Text = string.Empty;
+            CategoryComboBox.ClearSelection();
         }
     }
 }

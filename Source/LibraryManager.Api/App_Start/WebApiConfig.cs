@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LibraryManager.Api.Mappings;
 using LibraryManager.Api.Services;
+using LibraryManager.Data.Helpers;
 using LibraryManager.Data.Repositories;
 using System.Web.Http;
 using Unity;
@@ -25,6 +26,7 @@ namespace LibraryManager.Api
 
             // Configure Dependency Injection
             var container = new UnityContainer();
+            container.RegisterType<IDatabaseOperations, DatabaseOperations>();
             container.RegisterType<IBookRepository, BookRepository>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
             container.RegisterType<IBookService, BookService>();

@@ -66,7 +66,8 @@ namespace LibraryManager.WebForms
 
         public async Task<List<CategoryDto>> GetCategoriesAsync()
         {
-            var response = await _client.GetAsync("categories");
+            
+            var response = await _client.GetAsync("categories/");
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<CategoryDto>>(json);
@@ -75,7 +76,7 @@ namespace LibraryManager.WebForms
         public async Task<CategoryDto> CreateCategoryAsync(CategoryDto category)
         {
             var content = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("categories", content);
+            var response = await _client.PostAsync("categories/", content);
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<CategoryDto>(json);

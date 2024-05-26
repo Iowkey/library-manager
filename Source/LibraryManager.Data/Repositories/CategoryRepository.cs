@@ -1,7 +1,9 @@
 ﻿using LibraryManager.Data.DataContext;
 using LibraryManager.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LibraryManager.Data.Repositories
@@ -27,12 +29,22 @@ namespace LibraryManager.Data.Repositories
 
         public async Task AddCategoryAsync(Category category)
         {
+            if (!IsValidCategory(category))
+            {
+                throw new ArgumentException("Invalid category entity. Only letters allowed.");
+            }
+
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCategoryAsync(Category category)
         {
+            if (!IsValidCategory(category))
+            {
+                throw new ArgumentException("Invalid category entity. Only letters allowed.");
+            }
+
             _context.Entry(category).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -45,6 +57,11 @@ namespace LibraryManager.Data.Repositories
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        private bool IsValidCategory(Category category)
+        {
+            return category.Name.All(char.IsLetter);
         }
     }
 }
