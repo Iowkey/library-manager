@@ -28,8 +28,7 @@
         <tr>
             <td>Category:</td>
             <td>
-                <asp:TextBox ID="CategoryTextBox" runat="server" AutoPostBack="false" onkeyup="filterCategories()" />
-                <asp:ListBox ID="CategoryListBox" runat="server" AutoPostBack="false" Height="100px" SelectionMode="Single" OnSelectedIndexChanged="CategoryListBox_SelectedIndexChanged"></asp:ListBox>
+                <asp:TextBox ID="CategoryTextBox" runat="server" />
             </td>
         </tr>
         <tr>
@@ -39,16 +38,38 @@
             <td colspan="2"><asp:Button ID="BackToHomeButton" runat="server" Text="Back to Home" OnClick="BackToHomeButton_Click" /></td>
         </tr>
     </table>
-</asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="HeadContent" runat="server">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-        function filterCategories() {
-            var input = $("#<%= CategoryTextBox.ClientID %>").val().toLowerCase();
-            $("#<%= CategoryListBox.ClientID %> option").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(input) > -1)
-            });
-        }
+        $(document).ready(function () {
+            var availableCategories = [];
+
+            function loadCategories() {
+                $.ajax({
+                    type: "GET",
+                    url: '<%= ResolveUrl("~/Api/Categories") %>',
+                    success: function (data) {
+                        availableCategories = data.map(function (category) {
+                            return category.Name;
+                        });
+                        $("#<%= CategoryTextBox.ClientID %>").autocomplete({
+                            source: availableCategories,
+                            change: function (event, ui) {
+                                if (ui.item == null) {
+                                    var value = $(this).val().toLowerCase();
+                                    var found = availableCategories.some(function (category) {
+                                        return category.toLowerCase() === value;
+                                    });
+                                    if (found) {
+                                        $(this).val('');
+                                        alert('This category already exists. Please select it from the list.');
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            loadCategories();
+        });
     </script>
 </asp:Content>

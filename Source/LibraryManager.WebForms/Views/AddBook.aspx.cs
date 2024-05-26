@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace LibraryManager.WebForms.Views
 {
@@ -14,17 +15,7 @@ namespace LibraryManager.WebForms.Views
         {
             if (!IsPostBack)
             {
-                await LoadCategoriesAsync();
             }
-        }
-
-        private async Task LoadCategoriesAsync()
-        {
-            var categories = await _apiClient.GetCategoriesAsync();
-            CategoryListBox.DataSource = categories;
-            CategoryListBox.DataTextField = "Name";
-            CategoryListBox.DataValueField = "CategoryId";
-            CategoryListBox.DataBind();
         }
 
         protected async void AddBookButton_Click(object sender, EventArgs e)
@@ -56,12 +47,7 @@ namespace LibraryManager.WebForms.Views
             if (addedBook != null)
             {
                 SuccessLabel.Text = "Book added successfully!";
-                TitleTextBox.Text = string.Empty;
-                AuthorTextBox.Text = string.Empty;
-                ISBNTextBox.Text = string.Empty;
-                PublicationYearTextBox.Text = string.Empty;
-                QuantityTextBox.Text = string.Empty;
-                CategoryListBox.Text = string.Empty;
+                ClearForm();
             }
             else
             {
@@ -69,14 +55,19 @@ namespace LibraryManager.WebForms.Views
             }
         }
 
-        protected void CategoryListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CategoryTextBox.Text = CategoryListBox.SelectedItem.Text;
-        }
-
         protected void BackToHomeButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("Home.aspx");
+        }
+
+        private void ClearForm()
+        {
+            TitleTextBox.Text = string.Empty;
+            AuthorTextBox.Text = string.Empty;
+            ISBNTextBox.Text = string.Empty;
+            PublicationYearTextBox.Text = string.Empty;
+            QuantityTextBox.Text = string.Empty;
+            CategoryTextBox.Text = string.Empty;
         }
     }
 }
