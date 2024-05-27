@@ -9,6 +9,7 @@ Click "OK".
 6. Now you can manage your library.
 
 __Possible issues and workarounds:__
+
 In case any issues with nuget packages occur follow these steps: 
 1. Open Source folder in the root of the local project. Delete everything from the packages folder.
 2. In Visual Studio right-click on the solution and then click "Restore NuGet packages".
