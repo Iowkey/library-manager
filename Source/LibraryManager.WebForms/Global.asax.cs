@@ -13,5 +13,12 @@ namespace LibraryManager.WebForms
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            Server.ClearError();
+            Response.Redirect("Error.aspx");
+            Context.ApplicationInstance.CompleteRequest();
+        }
     }
 }

@@ -180,6 +180,7 @@
     <Content Include="Views\AddBook.aspx" />
     <Content Include="Views\DeleteBook.aspx" />
     <Content Include="Views\EditBook.aspx" />
+    <Content Include="Views\Error.aspx" />
     <Content Include="Views\Home.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -269,6 +270,13 @@
     </Compile>
     <Compile Include="Views\EditBook.aspx.designer.cs">
       <DependentUpon>EditBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>

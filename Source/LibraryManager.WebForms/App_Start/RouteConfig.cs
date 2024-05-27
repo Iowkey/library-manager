@@ -12,6 +12,7 @@ namespace LibraryManager.WebForms
             routes.MapPageRoute("AddBookRoute", "AddBook", "~/Views/AddBook.aspx");
             routes.MapPageRoute("EditBookRoute", "EditBook/{id}", "~/Views/EditBook.aspx");
             routes.MapPageRoute("DeleteBookRoute", "DeleteBook/{id}", "~/Views/DeleteBook.aspx");
+            routes.MapPageRoute("ErrorRoute", "Error", "~/Views/Error.aspx");
         }
     }
 }
